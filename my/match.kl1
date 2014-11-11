@@ -1,0 +1,11 @@
+
+:- module main.
+
+main :- 
+    foo(X) = foo(bar(1)),
+    pred(X, Y),
+    builtin:print(Y).
+
+pred(bar(X), R) :- R = X.
+
+

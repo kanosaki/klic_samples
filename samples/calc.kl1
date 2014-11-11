@@ -1,0 +1,31 @@
+:- module main.
+
+main :- 
+    calc(Msg),
+    Msg = [add(2), mul(8), sub(1), div(5), result(X)],
+    io:outstream([print(X), nl]).
+
+calc(Msg) :- calc(Msg, 0).
+
+calc([], Value) :- true.
+calc([add(X)|Rest], Value) :-
+    Value1 := Value + X,
+    calc(Rest, Value1).
+calc([sub(X)|Rest], Value) :-
+    Value1 := Value - X,
+    calc(Rest, Value1).
+calc([mul(X)|Rest], Value) :-
+    Value1 := Value * X,
+    calc(Rest, Value1).
+calc([div(X)|Rest], Value) :-
+    Value1 := Value / X,
+    calc(Rest, Value1).
+calc([result(X)|Rest], Value) :-
+    X = Value,
+    calc(Rest, Value1).
+calc([clear|Rest], Value) :-
+    calc(Rest, 0).
+otherwise.
+calc([X|Rest], Value) :-
+    io:outstream([print("Illegal message in calc/2"), nl]),
+    unix:exit(-1).

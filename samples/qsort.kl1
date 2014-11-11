@@ -1,0 +1,29 @@
+:- module main.
+
+main :- 
+    qsort([9, 4, 5, 15, 2, 6], Out),
+    io:outstream([print(Out),nl]).
+
+qsort([], Out) :- Out = [].
+qsort([H|T], Out) :-
+    compare(H, T, L, R),
+    qsort(L, LOut),
+    qsort(R, ROut),
+    concat(LOut, [H|ROut], Out).
+
+
+concat([A|X1], Y, Z) :-
+    Z = [A|Z1],
+    concat(X1, Y, Z1).
+concat([], Y, Z) :-
+    Z = Y.
+
+compare(X, [], L, R) :- L = [], R = [].
+compare(X, [H|T], L, R) :- H > X |
+    R = [H|R1],
+    compare(X, T, L, R1).
+compare(X, [H|T], L, R) :- H =< X |
+    L = [H|L1],
+    compare(X, T, L1, R).
+
+

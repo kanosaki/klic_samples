@@ -1,0 +1,23 @@
+
+:- module main.
+
+go(Max, Count) :-
+    fibonacci_lazy(0, 1, Stream),
+    count(Max, Stream, Count).
+
+fibonacci_lazy(_, _, []) :- true.
+fibonacci_lazy(N1, N2, [Next|Stream1]) :-
+    N3 := N1 + N2,
+    Next = N2,
+    fibonacci_lazy(N2, N3, Stream1).
+
+count(Max, Stream, Count) :-
+    Stream = [Next|Stream1],
+    count(Next, Max, Stream, 0, Count).
+count(Next, Max, Stream, N, Count) :- Next >= Max |
+    Stream = [],
+    Count = N.
+count(Next, Max, Stream, N, Count) :- Next < Max |
+    N1 := N + 1,
+    Stream = [Next|Stream1],
+    count(Next1, Max, Stream1, N1, Count).

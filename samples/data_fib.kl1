@@ -1,0 +1,19 @@
+
+:- module main.
+
+go(Max, Count) :-
+    fibonacci(0, 1, Max, Stream),
+    count(Stream, 0, Count).
+
+fibonacci(N1, N2, Max, Stream) :- N2 >= Max |
+    Stream = [].
+fibonacci(N1, N2, Max, Stream) :- N2 < Max |
+    Stream = [N2|Stream],
+    N3 := N1 + N2,
+    fibonacci(N2, N3, Max, Stream1).
+
+count([], N, Count) :-
+    Count = N.
+count([H|T], N, Count) :-
+    N1 := N + 1,
+    count(T, N1, Count).

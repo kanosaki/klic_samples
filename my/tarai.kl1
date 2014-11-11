@@ -1,0 +1,18 @@
+:- module main.
+
+main :- 
+    tarai(12, 6, 0, X),
+    io:outstream([print(X), nl]).
+
+tarai(X, Y, Z, R) :- X =< Y | 
+    R = Z, 
+    C = 1.
+tarai(X, Y, Z, R) :- X > Y  |
+% builtin:print([X, Y, Z, nl]),
+    X1 := X - 1,
+    Y1 := Y - 1,
+    Z1 := Z - 1,
+    tarai(X1, Y, Z, XX),
+    tarai(Y1, Z, X, YY),
+    tarai(Z1, X, Y, ZZ),
+    tarai(XX, YY, ZZ, R).

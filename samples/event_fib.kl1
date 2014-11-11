@@ -1,0 +1,37 @@
+:- module main.
+
+main :- fibonacci_lazy(S),
+        driver(S, In, Out),
+        klicio:klicio([stdin(normal(In)), stdout(normal(Out))]).
+
+fibonacci_lazy(Stream) :- fib_lazy(0, 1, Stream).
+
+fib_lazy(N1, N2, [N|S]) :-
+    N = N2,
+    N3 := N1 + N2,
+    fib_lazy(N2, N3, S).
+fib_lazy(_, _, []).
+
+driver(S, In, Out) :-
+    prompt("Input y (others end): ", Cmd, In, InRest, Out, OutRest),
+    checkinput(S, InRest, OutRest, Cmd).
+
+prompt(Msg, Cmd, In, InRest, Out, OutRest) :-
+    Out = [fwrite(Msg), fflush(Flag)|OutRest],
+    prompt_wait(Flag, Cmd, In, InRest).
+
+prompt_wait(Flag, Cmd, In, InRest) :- wait(Flag) |
+    In = [gett(Cmd)|InRest],
+    input_wait(Cmd).
+
+input_wait(Cmd) :- wait(Cmd) | true.
+
+checkinput(S, In, Out, y) :-
+    S = [A|Rest],
+    Out = [putt(A), nl|OutRest],
+    driver(Rest, In, OutRest).
+otherwise.
+checkinput(S, In, Out, Cmd) :-
+    S = [],
+    In = [],
+    Out = [].

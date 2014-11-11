@@ -1,0 +1,9 @@
+:- module main.
+
+main :- number(1, 10).
+
+number(A, B) :- A > B | true.
+number(A, B) :- A <= B |
+    io:outstream([print(A), nl]),
+    A1 := A + 1,
+    number(A1, B).

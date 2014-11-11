@@ -1,0 +1,15 @@
+
+:- module utl.
+
+
+string_to_integer(S,N,R) :- string(S, K, 8) | s_to_i(0, K, S, 0, N, R).
+
+s_to_i(I, K, S, Temp, Result, R) :- I < K |
+    string_element(S, I, X),
+    (#"0" =< X, X =< #"9" ->
+        (Temp1 := (Temp * 10) + (X - #"0"),
+         s_to_i(~(I+1), K, S, Temp1, Result, R));
+     otherwise;
+     true -> (Result = Temp, R = print)).
+
+s_to_i(I, K, S, Temp, Result, R) :- I = K | Result = Temp, R = ordinal.

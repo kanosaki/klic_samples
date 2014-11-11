@@ -1,0 +1,9 @@
+
+:- module main.
+
+main :- 
+    X = [],
+    head(X, Y),
+    builtin:print(Y).
+
+head([H|T], R) :- R = T.

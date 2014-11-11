@@ -1,0 +1,6 @@
+
+:- module main.
+
+main :-
+    klicio:klicio([stdin(normal([gett(X)]))]),
+    builtin:print(X).
